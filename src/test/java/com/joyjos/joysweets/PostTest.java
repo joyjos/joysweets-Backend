@@ -1,0 +1,68 @@
+package com.joyjos.joysweets;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.FixMethodOrder;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.joyjos.joysweets.modelo.PostVO;
+import com.joyjos.joysweets.servicios.ServicioPost;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+class PostTest {
+
+	@Autowired
+	ServicioPost sp;
+	
+	@Test
+	public void t01ConexionOK() {
+		assertNotNull(sp);
+	}
+	
+	//Inserta post
+	@Test
+	public void t02savePostOK() {	
+		PostVO p=new PostVO("Teresitas");
+		sp.save(p);
+		assertNotNull(sp.findByPost("Teresitas"));
+	}
+	
+	//Actualiza post
+	@Test
+	public void t03modificaPostOK() {
+		PostVO p=sp.findByPost("Cupcakes de chocolate");
+		p.setPost("Frixuelos");
+		sp.save(p);
+		assertEquals("Frixuelos",sp.findByPost("Frixuelos").getPost());
+	}
+	
+	//Elimina post
+	@Test
+	public void t04eliminaPostOK() {
+		PostVO p=sp.findByPost("Brownie");
+		//elimina el post y sus comentarios porque la
+		//restricción permite un borrado en cascada
+		try{
+			sp.delete(p);
+		}catch(Exception e) {
+			System.out.println("Error al eliminar el post "+e.getMessage());
+		}
+		assertNull(sp.findByPost("Brownie"));
+	}
+	
+	//Busco por post
+	@Test
+	public void t05BuscarPorNombreOK(){
+		assertEquals(1,sp.findByPost("Tarta de Queso").getIdPost());
+	}
+
+}

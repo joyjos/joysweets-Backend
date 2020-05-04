@@ -6,12 +6,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joyjos.joysweets.seguridad.modelo.UsuarioDTO;
@@ -20,6 +22,8 @@ import com.joyjos.joysweets.seguridad.servicios.ServicioUsuario;
 import com.joyjos.joysweets.servicios.ServicioPost;
 
 @RestController
+@RequestMapping("/usuarios")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioWS {
 	
 	//Inyecto el servicio usuario
@@ -39,7 +43,7 @@ public class UsuarioWS {
 		
 		//relleno la lista dto a partir de la lista VO
 		for(UsuarioVO u:su.findAll())
-			lista.add(new UsuarioDTO(u.getIdUsuario(),u.getNombre()));
+			lista.add(new UsuarioDTO(u.getIdUsuario(),u.getNombre(),u.getUsername()));
 		return lista;
 	}
 	
@@ -47,7 +51,7 @@ public class UsuarioWS {
 	@GetMapping("/usuario/{idUsuario}")
 	public UsuarioDTO buscarUnUsuario(@PathVariable int idUsuario) {
 		UsuarioVO uvo=su.findById(idUsuario).get();
-		UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre());
+		UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre(),uvo.getUsername());
 		return u;
 	}
 	

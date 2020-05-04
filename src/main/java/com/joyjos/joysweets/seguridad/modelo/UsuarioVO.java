@@ -77,6 +77,11 @@ public class UsuarioVO {
 		super();
 		this.nombre = nombre;
 	}
+	
+	public UsuarioVO(String nombre, String username) {
+		this.nombre = nombre;
+		this.username = username;
+	}
 
 	public UsuarioVO(String nombre, String username, String password) {
 		super();
@@ -84,6 +89,7 @@ public class UsuarioVO {
 		this.username = username;
 		this.password = password;
 	}
+
 
 	public int getIdUsuario() {
 		return idUsuario;

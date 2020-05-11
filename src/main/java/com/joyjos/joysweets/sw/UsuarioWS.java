@@ -43,7 +43,7 @@ public class UsuarioWS {
 		
 		//relleno la lista dto a partir de la lista VO
 		for(UsuarioVO u:su.findAll())
-			lista.add(new UsuarioDTO(u.getIdUsuario(),u.getNombre(),u.getUsername()));
+			lista.add(new UsuarioDTO(u.getIdUsuario(),u.getNombre(),u.getUsername(),u.getRoles()));
 		return lista;
 	}
 	
@@ -51,7 +51,7 @@ public class UsuarioWS {
 	@GetMapping("/usuario/{idUsuario}")
 	public UsuarioDTO buscarUnUsuario(@PathVariable int idUsuario) {
 		UsuarioVO uvo=su.findById(idUsuario).get();
-		UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre(),uvo.getUsername());
+		UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre(),uvo.getUsername(),uvo.getRoles());
 		return u;
 	}
 	

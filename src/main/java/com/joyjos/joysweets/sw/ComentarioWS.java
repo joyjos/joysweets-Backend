@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joyjos.joysweets.modelo.ComentarioDTO;
@@ -87,6 +88,13 @@ public class ComentarioWS {
 //			lista.add(new ComentarioDTO(up.getIdComentario(),up.getComentario(),up.getFechaComentario()));
 //			return lista;
 //	  }
+	
+	/*
+	 * @GetMapping("/comentarios/children/{id}")
+	 * 
+	 * @ResponseBody public List<ComentarioDTO> getChildren(@PathVariable int id){
+	 * return sc.findByParent(sc.getOne(id)); }
+	 */
 	 
 	
 	//Inserto un comentario

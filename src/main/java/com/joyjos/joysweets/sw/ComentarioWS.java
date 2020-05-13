@@ -78,7 +78,7 @@ public class ComentarioWS {
 	
 //	  //Muestro los comentarios de un post
 //	  @GetMapping("/comentarios/{idPost}")
-//	  public Iterable<ComentarioDTO>vbuscarComentarios(@PathVariable int idPost) {
+//	  public Iterable<ComentarioDTO>buscarComentarios(@PathVariable int idPost) {
 //	  
 //		  //creo una lista vacía que almacena los dto
 //		  List<ComentarioDTO> lista=new ArrayList<ComentarioDTO>();

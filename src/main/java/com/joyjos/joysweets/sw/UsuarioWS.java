@@ -47,13 +47,21 @@ public class UsuarioWS {
 		return lista;
 	}
 	
-	//Muestro un usuario en particular
+	//Muestro un usuario en particular por el id
 	@GetMapping("/usuario/{idUsuario}")
 	public UsuarioDTO buscarUnUsuario(@PathVariable int idUsuario) {
 		UsuarioVO uvo=su.findById(idUsuario).get();
 		UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre(),uvo.getUsername(),uvo.getRoles());
 		return u;
 	}
+
+	//Muestro un usuario en particular por el username
+		@GetMapping("/usuarioU/{username}")
+		public UsuarioDTO buscarUnUsuarioU(@PathVariable String username) {
+			UsuarioVO uvo=su.findByUsername(username).get();
+			UsuarioDTO u=new UsuarioDTO(uvo.getIdUsuario(),uvo.getNombre(),uvo.getUsername(),uvo.getRoles());
+			return u;
+		}
 	
 	//Inserto un usuario (convierto el UsuarioDTO en UsuarioVO y lo persisto en la bbdd)
 	@PreAuthorize("hasRole('ADMIN')")
@@ -72,7 +80,7 @@ public class UsuarioWS {
 		UsuarioVO u=su.findById(idUsuario).get();
 		u.setNombre(usuario.getNombre());
 		u.setUsername(usuario.getUsername());
-		u.setPassword(usuario.getPassword());
+		u.setRoles(usuario.getRoles());
 		su.save(u);
 		return "El usuario "+usuario.getNombre()+", se modificó con éxito";
 	}

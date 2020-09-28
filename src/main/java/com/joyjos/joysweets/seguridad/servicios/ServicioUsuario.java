@@ -48,5 +48,9 @@ public class ServicioUsuario {
 	public UsuarioVO findByNombre(String nombre) {
 		return ur.findByNombre(nombre);
 	}
+	
+	public Optional<UsuarioVO> findByUsername(String username) {
+		return ur.findByUsername(username);
+	}
     
 }

@@ -8,17 +8,19 @@ public class UsuarioDTO {
 	private int idUsuario;
 	private String nombre;
 	private String username;
+	private String password;
 	private Set<RolVO> roles = new HashSet<>();
 	
 	public UsuarioDTO() {
 		super();
 	}
 
-	public UsuarioDTO(int idUsuario, String nombre, String username, Set<RolVO> roles) {
+	public UsuarioDTO(int idUsuario, String nombre, String username, String password, Set<RolVO> roles) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.username=username;
+		this.password=password;
 		this.roles = roles;
 	}
 
@@ -46,6 +48,14 @@ public class UsuarioDTO {
 		this.nombre = username;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void setRoles(Set<RolVO> roles) {
 		this.roles = roles;
 	}

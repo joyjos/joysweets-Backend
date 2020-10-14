@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.joyjos.joysweets.seguridad.modelo.UsuarioVO;
 
 @Entity
@@ -23,10 +24,14 @@ public class ComentarioVO {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idComentario;
 	
+	//Para que no dé error por overflow (no se serializa la propiedad al convertir de json a objeto)
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="idUsuario")
 	private UsuarioVO usuario;
 	
+	//Para que no dé error por overflow (no se serializa la propiedad al convertir de json a objeto)
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="idPost")
 	private PostVO post;

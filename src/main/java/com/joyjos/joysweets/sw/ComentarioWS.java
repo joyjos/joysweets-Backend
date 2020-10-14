@@ -55,7 +55,7 @@ public class ComentarioWS {
 			
 		// relleno la lista dto a partir de la lista VO
 		for(ComentarioVO up:sc.findAll())
-			lista.add(new ComentarioDTO(up.getIdComentario(),up.getComentario(),up.getFechaComentario()));
+			lista.add(new ComentarioDTO(up.getIdComentario(),up.getComentario(),up.getFechaComentario(),up.getPost(),up.getUsuario()));
 		return lista;
 	}
 	
@@ -63,7 +63,7 @@ public class ComentarioWS {
 	@GetMapping("/comentarios/{idPost}")
 	public ComentarioDTO buscarComentarioPorPost(@PathVariable int idPost) {
 		ComentarioVO cvo=sc.findById(idPost).get();
-		ComentarioDTO c=new ComentarioDTO(cvo.getIdComentario(),cvo.getComentario(),cvo.getFechaComentario());
+		ComentarioDTO c=new ComentarioDTO(cvo.getIdComentario(),cvo.getComentario(),cvo.getFechaComentario(),cvo.getPost(),cvo.getUsuario());
 		return c;
 	}
 	
@@ -71,7 +71,7 @@ public class ComentarioWS {
 	@GetMapping("/comentario/{idComentario}")
 	public ComentarioDTO buscarUnComentario(@PathVariable int idComentario) {
 		ComentarioVO cvo=sc.findById(idComentario).get();
-		ComentarioDTO c=new ComentarioDTO(cvo.getIdComentario(),cvo.getComentario(),cvo.getFechaComentario());
+		ComentarioDTO c=new ComentarioDTO(cvo.getIdComentario(),cvo.getComentario(),cvo.getFechaComentario(),cvo.getPost(),cvo.getUsuario());
 		return c;
 	}
 	

@@ -64,7 +64,7 @@ public class UsuarioWS {
 		}
 	
 	//Inserto un usuario (convierto el UsuarioDTO en UsuarioVO y lo persisto en la bbdd)
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insertarUsuario")
 	public String insertarUsuario(@RequestBody UsuarioVO udto) {
 		UsuarioVO u=new UsuarioVO(udto.getNombre(),udto.getUsername(),udto.getPassword());

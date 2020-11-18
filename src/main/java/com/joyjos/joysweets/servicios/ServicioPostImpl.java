@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joyjos.joysweets.modelo.ComentarioVO;
+import com.joyjos.joysweets.modelo.PostDTO;
 import com.joyjos.joysweets.modelo.PostVO;
 import com.joyjos.joysweets.repositorio.PostRepositorio;
 
@@ -69,6 +70,12 @@ public class ServicioPostImpl implements ServicioPost {
 	@Override
 	public ComentarioVO findByComentario(String string) {
 		return null;
+	}
+
+	@Override
+	public void save(PostDTO pdto) {
+		pr.save(pdto);
+		
 	}
 	
 }

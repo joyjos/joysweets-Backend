@@ -3,7 +3,11 @@ package com.joyjos.joysweets.sw;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +17,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import com.joyjos.joysweets.controlador.FicherosController;
 import com.joyjos.joysweets.modelo.PostDTO;
 import com.joyjos.joysweets.modelo.PostVO;
 import com.joyjos.joysweets.servicios.ServicioPost;
+import com.joyjos.joysweets.upload.StorageService;
 
 @RestController
 @RequestMapping("/posts")
@@ -28,6 +37,9 @@ public class PostWS {
 	@Autowired
 	ServicioPost sp;
 	
+	@Autowired
+	private StorageService storageService;
+	
 	//Muestro todos los posts
 	@GetMapping("/posts")
 	public Iterable<PostDTO> mostrarPosts() {
@@ -37,7 +49,7 @@ public class PostWS {
 			
 		// relleno la lista dto a partir de la lista VO
 		for(PostVO p:sp.findAll())
-			lista.add(new PostDTO(p.getIdPost(),p.getNombre(),p.getCategoria(),p.getPost(),p.getImagen(),p.getFechaPost()));
+			lista.add(new PostDTO(p.getIdPost(),p.getNombre(),p.getCategoria(),p.getPost(),p.getImagen(),p.getFechaPost(),p.getUsuarios()));
 		return lista;
 	}
 	
@@ -45,31 +57,75 @@ public class PostWS {
 	@GetMapping("/post/{idPost}")
 	public PostDTO buscarUnPost(@PathVariable int idPost) {
 		PostVO pvo=sp.findById(idPost).get();
-		PostDTO p=new PostDTO(pvo.getIdPost(),pvo.getNombre(),pvo.getCategoria(),pvo.getPost(),pvo.getImagen(),pvo.getFechaPost());
+		PostDTO p=new PostDTO(pvo.getIdPost(),pvo.getNombre(),pvo.getCategoria(),pvo.getPost(),pvo.getImagen(),pvo.getFechaPost(),pvo.getUsuarios());
 		return p;
 	}
+	
+//	//Inserto un post
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@PostMapping("/insertarPost")
+//	public String insertarPost(@RequestBody PostDTO pdto) {
+//		sp.save(new PostVO(pdto.getNombre(),pdto.getCategoria(),pdto.getPost(),pdto.getImagen(),pdto.getFechaPost()));
+//		return "El post "+pdto.getPost()+", se insertó con éxito";
+//	}
 	
 	//Inserto un post
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insertarPost")
-	public String insertarPost(@RequestBody PostDTO pdto) {
-		sp.save(new PostVO(pdto.getNombre(),pdto.getCategoria(),pdto.getPost(),pdto.getImagen(),pdto.getFechaPost()));
-		return "El post "+pdto.getPost()+", se insertó con éxito";
+	public ResponseEntity<?> insertarPost(@Valid @RequestPart MultipartFile file, @RequestPart PostDTO pdto){
+		
+		String urlImagen = null;
+		if(!file.isEmpty()) {
+			String imagen = storageService.store(file);
+			urlImagen = MvcUriComponentsBuilder.fromMethodName(FicherosController.class, "serveFile", imagen, null)
+						.build().toUriString();
+		}
+				
+		PostVO post = new PostVO(pdto.getNombre(),pdto.getCategoria(),pdto.getPost(),pdto.getFechaPost());
+				
+		post.setImagen(urlImagen);
+		sp.save(post);
+		
+		return new ResponseEntity<>("El post "+pdto.getNombre()+", se insertó con éxito", HttpStatus.CREATED);
 	}
+	
+	//Modifico un post
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@PutMapping("/modificarPost/{idPost}")
+//	public String modificarPost(@PathVariable int idPost,@RequestBody PostDTO post) {
+//		//recupero el post a modificar
+//		PostVO p=sp.findById(idPost).get();
+//		p.setNombre(post.getNombre());
+//		p.setCategoria(post.getCategoria());
+//		p.setPost(post.getPost());
+//		p.setImagen(post.getImagen());
+//		p.setFechaPost(post.getFechaPost());
+//		sp.save(p);
+//		return "El post "+post.getPost()+", se modificó con éxito";
+//	}
 	
 	//Modifico un post
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/modificarPost/{idPost}")
-	public String modificarPost(@PathVariable int idPost,@RequestBody PostDTO post) {
+	public ResponseEntity<?> modificarPost(@PathVariable int idPost, @Valid @RequestPart MultipartFile file, @RequestPart PostDTO pdto){
+		
+		String urlImagen = null;
+		if(!file.isEmpty()) {
+			String imagen = storageService.store(file);
+			urlImagen = MvcUriComponentsBuilder.fromMethodName(FicherosController.class, "serveFile", imagen, null)
+						.build().toUriString();
+		}
+				
 		//recupero el post a modificar
 		PostVO p=sp.findById(idPost).get();
-		p.setNombre(post.getNombre());
-		p.setCategoria(post.getCategoria());
-		p.setPost(post.getPost());
-		p.setImagen(post.getImagen());
-		p.setFechaPost(post.getFechaPost());
+		p.setNombre(pdto.getNombre());
+		p.setCategoria(pdto.getCategoria());
+		p.setPost(pdto.getPost());
+				
+		p.setImagen(urlImagen);
 		sp.save(p);
-		return "El post "+post.getPost()+", se modificó con éxito";
+		
+		return new ResponseEntity<>("El post "+pdto.getNombre()+", se modificó con éxito", HttpStatus.CREATED);
 	}
 	
 	//Elimino un post

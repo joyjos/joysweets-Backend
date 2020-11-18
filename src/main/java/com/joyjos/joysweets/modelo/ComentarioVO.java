@@ -25,13 +25,13 @@ public class ComentarioVO {
 	private int idComentario;
 	
 	//Para que no dé error por overflow (no se serializa la propiedad al convertir de json a objeto)
-	@JsonBackReference
+	@JsonBackReference("usuario")
 	@ManyToOne
 	@JoinColumn(name="idUsuario")
 	private UsuarioVO usuario;
 	
 	//Para que no dé error por overflow (no se serializa la propiedad al convertir de json a objeto)
-	@JsonBackReference
+	@JsonBackReference("post")
 	@ManyToOne
 	@JoinColumn(name="idPost")
 	private PostVO post;

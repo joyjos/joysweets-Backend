@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.joyjos.joysweets.modelo.ComentarioVO;
+import com.joyjos.joysweets.modelo.PostDTO;
 import com.joyjos.joysweets.modelo.PostVO;
 
 public interface ServicioPost {
@@ -29,5 +30,7 @@ public interface ServicioPost {
 	<S extends PostVO> S save(S entity);
 
 	ComentarioVO findByComentario(String string);
+
+	void save(PostDTO pdto);
 
 }

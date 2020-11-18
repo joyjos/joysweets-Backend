@@ -29,10 +29,10 @@ public class PostVO {
 	@Column(name="categoria", length=45)
 	private String categoria;
 	
-	@Column(name="post")
+	@Column(name="post", columnDefinition="TEXT")
 	private String post;
 	
-	@Column(name="imagen", length=45)
+	@Column(name="imagen", length=255)
 	private String imagen;
 	
 	@Column(name="fechaPost")
@@ -68,6 +68,14 @@ public class PostVO {
 		this.categoria=categoria;
 		this.post = post;
 		this.imagen = imagen;
+		this.fechaPost = fechaPost;
+	}
+
+	public PostVO(String nombre, String categoria, String post, LocalDate fechaPost) {
+		super();
+		this.nombre = nombre;
+		this.categoria = categoria;
+		this.post = post;
 		this.fechaPost = fechaPost;
 	}
 

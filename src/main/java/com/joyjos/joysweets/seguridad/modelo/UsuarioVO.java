@@ -122,9 +122,17 @@ public class UsuarioVO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public Set<RolVO> getRoles() {
+		return roles;
+	}
 
 	public void setRoles(Set<RolVO> roles) {
 		this.roles = roles;
+	}
+	
+	public List<ComentarioVO> getPosts() {
+		return posts;
 	}
 
 	public void setPosts(List<ComentarioVO> posts) {
@@ -150,8 +158,6 @@ public class UsuarioVO {
 		return result;
 	}
 	
-	
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -203,11 +209,4 @@ public class UsuarioVO {
 		this.posts.add(up);
 	}
 
-	public List<ComentarioVO> getPosts() {
-		return posts;
-	}
-
-	public Set<RolVO> getRoles() {
-		return roles;
-	}
 }

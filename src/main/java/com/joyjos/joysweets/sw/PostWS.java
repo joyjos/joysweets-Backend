@@ -89,20 +89,18 @@ public class PostWS {
 		return new ResponseEntity<>("El post "+pdto.getNombre()+", se insertó con éxito", HttpStatus.CREATED);
 	}
 	
-	//Modifico un post
-//	@PreAuthorize("hasRole('ADMIN')")
-//	@PutMapping("/modificarPost/{idPost}")
-//	public String modificarPost(@PathVariable int idPost,@RequestBody PostDTO post) {
-//		//recupero el post a modificar
-//		PostVO p=sp.findById(idPost).get();
-//		p.setNombre(post.getNombre());
-//		p.setCategoria(post.getCategoria());
-//		p.setPost(post.getPost());
-//		p.setImagen(post.getImagen());
-//		p.setFechaPost(post.getFechaPost());
-//		sp.save(p);
-//		return "El post "+post.getPost()+", se modificó con éxito";
-//	}
+	//Modifico un post sin modificar la foto
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/modificarPostNoFile/{idPost}")
+	public String modificarPost(@PathVariable int idPost,@RequestPart PostDTO pdto) {
+		//recupero el post a modificar
+		PostVO p=sp.findById(idPost).get();
+		p.setNombre(pdto.getNombre());
+		p.setCategoria(pdto.getCategoria());
+		p.setPost(pdto.getPost());
+		sp.save(p);
+		return "El post "+pdto.getNombre()+", se modificó con éxito";
+	}
 	
 	//Modifico un post
 	@PreAuthorize("hasRole('ADMIN')")

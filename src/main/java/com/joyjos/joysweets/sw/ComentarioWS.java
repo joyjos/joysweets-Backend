@@ -98,7 +98,6 @@ public class ComentarioWS {
 	 
 	
 	//Inserto un comentario
-	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/comentarios/{idPost}/{idUsuario}")
 	public String insertarComentario( @PathVariable int idUsuario, @PathVariable int idPost, @RequestBody ComentarioVO cdto) {
 		ComentarioVO up=new ComentarioVO(su.findById(idUsuario).get(),sp.findById(idPost).get(),cdto.getComentario(),cdto.getFechaComentario());

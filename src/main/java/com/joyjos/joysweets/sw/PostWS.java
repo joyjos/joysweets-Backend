@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,14 +59,6 @@ public class PostWS {
 		PostDTO p=new PostDTO(pvo.getIdPost(),pvo.getNombre(),pvo.getCategoria(),pvo.getPost(),pvo.getImagen(),pvo.getFechaPost(),pvo.getUsuarios());
 		return p;
 	}
-	
-//	//Inserto un post
-//	@PreAuthorize("hasRole('ADMIN')")
-//	@PostMapping("/insertarPost")
-//	public String insertarPost(@RequestBody PostDTO pdto) {
-//		sp.save(new PostVO(pdto.getNombre(),pdto.getCategoria(),pdto.getPost(),pdto.getImagen(),pdto.getFechaPost()));
-//		return "El post "+pdto.getPost()+", se insertó con éxito";
-//	}
 	
 	//Inserto un post
 	@PreAuthorize("hasRole('ADMIN')")

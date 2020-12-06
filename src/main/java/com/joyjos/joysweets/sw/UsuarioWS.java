@@ -85,6 +85,17 @@ public class UsuarioWS {
 		return "El usuario "+usuario.getNombre()+", se modificó con éxito";
 	}
 	
+	//Modificar usuario desde el perfil (lo puede modificar también el USER)
+	@PutMapping("/modificarUsuarioP/{idUsuario}")
+	public String modificarUsuarioP(@PathVariable int idUsuario, @RequestBody UsuarioVO usuario) {
+		//recupero el usuario a modificar
+		UsuarioVO u=su.findById(idUsuario).get();
+		u.setNombre(usuario.getNombre());
+		u.setUsername(usuario.getUsername());
+		su.save(u);
+		return "El usuario "+usuario.getNombre()+", se modificó con éxito";
+	}
+	
 	//Elimino un usuario
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/eliminarUsuario/{idUsuario}")
@@ -99,15 +110,4 @@ public class UsuarioWS {
 		return "Usuario eliminado";
 	}
 	
-	/*
-	 * @PostMapping("/usuarios/{idUsuario}/{idPost}") public String
-	 * matricular( @PathVariable int idUsuario, @PathVariable int idPost) {
-	 * ComentarioVO up=new
-	 * ComentarioVO(LocalDate.now(),su.findById(idUsuario).get(),sp.findById(idPost)
-	 * .get()); UsuarioVO u=su.findById(idUsuario).get(); PostVO
-	 * p=sp.findById(idPost).get(); u.getPosts().add(up); p.getUsuarios().add(up);
-	 * su.save(u);
-	 * 
-	 * return "Usuario registrado"; }
-	 */
 }

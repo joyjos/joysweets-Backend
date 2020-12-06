@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joyjos.joysweets.modelo.ComentarioDTO;
@@ -40,11 +39,6 @@ public class ComentarioWS {
 	//Inyecto el servicio comentario
 	@Autowired
 	ServicioComentario sc;
-	
-//	@GetMapping("/comentarios")
-//	public Iterable<UsuarioVO> mostrarComentarios(){
-//		return su.findAll();
-//	}
 	
 	//Muestro todos los comentarios
 	@GetMapping("/comentarios")
@@ -75,28 +69,6 @@ public class ComentarioWS {
 		return c;
 	}
 	
-	
-//	  //Muestro los comentarios de un post
-//	  @GetMapping("/comentarios/{idPost}")
-//	  public Iterable<ComentarioDTO>buscarComentarios(@PathVariable int idPost) {
-//	  
-//		  //creo una lista vacía que almacena los dto
-//		  List<ComentarioDTO> lista=new ArrayList<ComentarioDTO>();
-//	  
-//		  //relleno la lista dto a partir de la lista VO
-//		  for(ComentarioVO up:sc.findById(idPost))
-//			lista.add(new ComentarioDTO(up.getIdComentario(),up.getComentario(),up.getFechaComentario()));
-//			return lista;
-//	  }
-	
-	/*
-	 * @GetMapping("/comentarios/children/{id}")
-	 * 
-	 * @ResponseBody public List<ComentarioDTO> getChildren(@PathVariable int id){
-	 * return sc.findByParent(sc.getOne(id)); }
-	 */
-	 
-	
 	//Inserto un comentario
 	@PostMapping("/comentarios/{idPost}/{idUsuario}")
 	public String insertarComentario( @PathVariable int idUsuario, @PathVariable int idPost, @RequestBody ComentarioVO cdto) {
@@ -117,7 +89,6 @@ public class ComentarioWS {
 		//recupero el comentario a modificar
 		ComentarioVO c=sc.findById(idComentario).get();
 		c.setComentario(comentario.getComentario());
-		c.setFechaComentario(comentario.getFechaComentario());
 		sc.save(c);
 		return "Comentario modificado";
 	}

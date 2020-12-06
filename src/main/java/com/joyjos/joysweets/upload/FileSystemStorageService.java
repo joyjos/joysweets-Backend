@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileSystemStorageService implements StorageService {
 	
-	// Directorio raiz de nuestro almacén de ficheros
+	//Directorio raíz de nuestro almacén de ficheros
 	
 	private final Path rootLocation;
 

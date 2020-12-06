@@ -79,9 +79,9 @@ public class PostVO {
 		this.fechaPost = fechaPost;
 	}
 
-	public PostVO(String post) {
+	public PostVO(String nombre) {
 		super();
-		this.post = post;
+		this.nombre = nombre;
 	}
 
 	public int getIdPost() {

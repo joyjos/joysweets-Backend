@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.List;
-
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -65,18 +63,6 @@ class UsuarioTest {
 	@Test
 	public void t05BuscarPorNombreOK() {
 		assertEquals(1,su.findByNombre("Jose").getIdUsuario());
-	}
-	
-	//Busco todos los usuarios
-	@Test
-	public void t06findAllUsuario(){
-		//voy a consultar los usuarios y ver todos sus posts
-		List<UsuarioVO> lista=(List<UsuarioVO>) su.findAll();
-		for(UsuarioVO unUsuario:lista) {
-			System.out.println("un usuario"+unUsuario.getNombre());
-			unUsuario.getPost().stream().forEach(x -> System .out.println(x));
-			assertEquals(2,unUsuario.getPost().size());
-		}
 	}
 
 }
